@@ -12,25 +12,23 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
-    public class Userscontroller : BaseApiController
+    public class UsersController : BaseApiController
     {
-        private readonly ILogger<Userscontroller> _logger;
+        private readonly ILogger<UsersController> _logger;
         private readonly DataContext _context;
 
-        public Userscontroller(ILogger<Userscontroller> logger, DataContext context)
+        public UsersController(ILogger<UsersController> logger, DataContext context)
         {
             _logger = logger;
             _context = context;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
           return await _context.Users.ToListAsync();
         }
 
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<AppUser>> GetUser(int id)
         {

@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,18 +11,25 @@ using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
-    public class AccountContoller : BaseApiController
+    public class AccountsController : BaseApiController
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
 
-        public AccountContoller(DataContext context, ITokenService tokenService)
+        public AccountsController(DataContext context, ITokenService tokenService)
         {
             _context = context;
             _tokenService = tokenService;
+        }
+
+        [HttpGet]
+        public bool GetUsers()
+        {
+          return  false;
         }
 
         [HttpPost("register")]
@@ -46,7 +57,7 @@ namespace API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> LoginDto(LoginDto logindto)
+        public async Task<ActionResult<UserDto>> Login(LoginDto logindto)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == logindto.Username);
 
